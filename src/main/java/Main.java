@@ -9,7 +9,7 @@ public class Main {
         MainServlet mainServlet = new MainServlet();
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.addServlet(new ServletHolder(mainServlet), "/");
+        context.addServlet(new ServletHolder(mainServlet), "/mult");
 
         Server server = new Server(8080);
         server.setHandler(context);
