@@ -16,17 +16,21 @@ public class MainServlet extends HttpServlet {
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws ServletException, IOException {
         Map<String, Object> pageVariables = createPageVariablesMap(request, response);
-        PrintWriter writer = response.getWriter();
-  //      pageVariables.put("message", "");
         String value = request.getParameter("value");
-        response.getWriter().println(new PageGenerator().getPage("page.html", pageVariables));
+        PrintWriter writer = response.getWriter();
+        writer.println(new PageGenerator().getPage("page.html", pageVariables));
         response.setContentType("text/html;charset=utf-8");
-        if (value == null || value.isEmpty()) {
-            writer.println(0);
+        try {
+            if (value.isEmpty() || value == null) {
+                writer.println(0);
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            } else {
+                int val = Integer.parseInt(request.getParameter(value));
+                writer.println(val * 2);
+                response.setStatus(HttpServletResponse.SC_OK);
+            }
+        } catch (NumberFormatException | NullPointerException e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        } else {
-            writer.println(Integer.parseInt(value) * 2);
-            response.setStatus(HttpServletResponse.SC_OK);
         }
     }
 

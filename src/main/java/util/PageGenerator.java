@@ -12,9 +12,11 @@ import java.util.Map;
 
 public class PageGenerator {
     private static final String HTML_DIR = "templates";
-
     private final Configuration cfg;
 
+    public PageGenerator() {
+        cfg = new Configuration();
+    }
 
     public String getPage(String filename, Map<String, Object> data) {
         Writer stream = new StringWriter();
@@ -25,9 +27,5 @@ public class PageGenerator {
             e.printStackTrace();
         }
         return stream.toString();
-    }
-
-    public PageGenerator() {
-        cfg = new Configuration();
     }
 }
